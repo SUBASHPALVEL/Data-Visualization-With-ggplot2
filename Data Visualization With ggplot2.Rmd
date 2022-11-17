@@ -1,0 +1,100 @@
+---
+title: "Data Visualization With ggplot2"
+author: "Subash Palvel"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+# Installing and Loading ggplot2
+```{r}
+#install.packages("ggplot2")
+library(ggplot2)
+```
+
+# Diamonds dataset
+```{r}
+head(diamonds)
+```
+# Economics dataset
+```{r}
+head(economics)
+```
+
+# Barplots
+
+## Vertical Bar Plot
+```{r}
+# Most occurring diamonds (change fill with "fill = ", change line colour with "colour = ")
+diamonds |> 
+  ggplot(mapping = aes(x = cut)) +
+  geom_bar()
+```
+
+## Horizontal Bar Plot
+```{r}
+diamonds |> 
+  ggplot(mapping = aes(y = cut)) +
+  geom_bar()
+```
+
+## Stacked BarPlot
+```{r}
+diamonds |> 
+  ggplot(mapping = aes(x = cut, fill = clarity), position = "fill") +
+  geom_bar()
+```
+## Grouped Barplot
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "dodge")
+```
+
+# Boxplots
+
+## Comparing diamond cut and price
+```{r}
+diamonds |> 
+  ggplot(mapping = aes(x = cut, y = price, colour = clarity)) +
+  geom_boxplot()
+```
+
+# Histogram
+```{r}
+#Check for the distribution of diamond carat
+diamonds |> 
+  ggplot(aes(x = carat)) +
+  geom_histogram()
+```
+
+# Scatter Plot
+```{r}
+# Check for the relationship between diamond price and carat
+diamonds |> 
+  ggplot(aes(x = price, y = carat)) +
+  geom_point()
+```
+
+# Line Graph
+```{r}
+economics |> 
+  ggplot(aes(x = date, y = pop)) +
+  geom_line()
+```
+
+
+# Labelling
+```{r}
+diamonds |> 
+  ggplot(mapping = aes(x = cut, y = price, colour = cut)) +
+  geom_boxplot() +
+  labs(x = "Cut", y = "Price", title = "Diamond Cut against Price", )
+```
+
+# Facetting
+```{r}
+diamonds |> 
+  ggplot(mapping = aes(y = cut, fill = cut)) +
+  geom_bar() +
+  facet_grid(color ~ .)
+```
